@@ -103,25 +103,37 @@ class ConsistentHash
 
     /** 返回 字符串着落节点
      * @param $str
+     * @param $debug
      * @return bool|\Redis
      */
-    public function lookUp($str)
+    public function lookUp($str, $debug)
     {
         $hash = $this->getHash($str);
-        $point=null;
+        $point = null;
         foreach ($this->positions as $key => $value) {
             if ($hash <= $key) {
-               $point = $value;
-               break;
+                $point = $value;
+                break;
             }
         }
-        if(!empty($point)){
-            foreach (self::$config as $value){
-                if(strcasecmp($value['host'],$point)===0){
+        if (empty($point)) {
+            $point = end($this->positions);
+        }
+        if ($debug) {
+            echo "[";
+            foreach ($this->positions as $key => $value) {
+                echo $key . "=>" . $value . "<br/>";
+            }
+            echo "]";
+            echo "<hr/>[{$str}的哈希值" . $hash . "被路由到][" . $point . " 结点]";
+        }
+        if (!empty($point)) {
+            foreach (self::$config as $value) {
+                if (strcasecmp($value['host'], $point) === 0) {
                     $Redis = new \Redis();
-                    $Redis->connect($value['host'],$value['port'],$value['timeout']);
+                    $Redis->connect($value['host'], $value['port'], $value['timeout']);
                     //是否需要密码
-                    if(!empty($value['auth'])){
+                    if (!empty($value['auth'])) {
                         $Redis->auth($value['auth']);
                     }
                     //选库
