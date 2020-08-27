@@ -1,0 +1,19 @@
+{
+    "name": "tangyong/library",
+    "description": "basic library",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "tangyong",
+            "email": "china.php@qq.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "tangyong\\library\\": "src"
+        }
+    }
+}
