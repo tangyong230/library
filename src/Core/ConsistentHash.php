@@ -101,12 +101,12 @@ class ConsistentHash
         $this->sortPos();
     }
 
-    /** 返回 字符串着落节点
+    /**
      * @param $str
-     * @param $debug
+     * @param bool $debug
      * @return bool|\Redis
      */
-    public function lookUp($str, $debug)
+    public function lookUp($str, $debug=false)
     {
         $hash = $this->getHash($str);
         $point = null;
