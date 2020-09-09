@@ -44,6 +44,7 @@ class ConsistentHash
      */
     private function __construct()
     {
+        self::$config = \Yii::$app->params['session_driver'];
         foreach (self::$config as $key => $value) {
             if (!isset($value['host'])) {
                 throw new TSdkException("ConsistentHash类配置有误");
