@@ -62,6 +62,7 @@ class Defense
             }
         } else {
             $this->redis->lPush($key, time());
+            $this->redis->expire($key,7*24*3600);
         }
     }
 
