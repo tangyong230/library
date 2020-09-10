@@ -52,7 +52,7 @@ class Defense
     {
         $key = "limit-frequency-" . "-" . md5($key);
         $num = $this->redis->lLen($key);
-        if ($num > self::F_COUNT) {
+        if ($num >= self::F_COUNT) {
             $last_time = $this->redis->lIndex($key, -1);
             if (time() - $last_time < self::F_INTERVAL) {
                 throw new TSdkException("访问频率超过了限制，请稍后再试");
@@ -74,11 +74,11 @@ class Defense
         $key = "limit-count-" . md5($key);
         $result = $this->redis->get($key);
         if (!empty($result)) {
-            if ($result > self::LIMIT_COUNT) {
+            if ($result >= self::LIMIT_COUNT) {
                 throw new TSdkException("访问次数超过了限制，请隔天再试");
             }
         }
-        $o_result = $this->redis->set($key, 0, ["nx", 'ex' => self::LIMIT_COUNT_TIME]);
+        $o_result = $this->redis->set($key, 1, ["nx", 'ex' => self::LIMIT_COUNT_TIME]);
         if (!$o_result) {
             $this->redis->incr($key);
         }
