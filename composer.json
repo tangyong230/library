@@ -10,7 +10,9 @@
         }
     ],
     "minimum-stability": "dev",
-    "require": {},
+    "require": {
+        "phpoffice/phpexcel": "dev-master"
+    },
     "autoload": {
         "psr-4": {
             "tangyong\\library\\": "src"
