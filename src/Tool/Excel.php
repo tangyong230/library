@@ -75,7 +75,7 @@ class Excel
     {
         $arrRangeData = range("A", "Z");
         $newArrRageData = [];
-        for ($i = 0; $i < count($number); $i++) {
+        for ($i = 0; $i < $number; $i++) {
             $newArrRageData[] = $arrRangeData[$i];
         }
         return $newArrRageData;
@@ -119,7 +119,7 @@ class Excel
     {
         $PHPExcel = new \PHPExcel();
         //生成range
-        $rangeData = self::createRangeByData($result);
+        $rangeData = self::createRangeByData(count($result[0]));
         self::setTableHeader($PHPExcel, $rangeData, $header, $index);
         self::setTableData($PHPExcel, $rangeData, $result, $index);
         self::setColumnWidth($PHPExcel,$rangeData,$width,$special,$index);
