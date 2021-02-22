@@ -12,6 +12,8 @@ namespace tangyong\library\Tool;
 class Excel
 {
 
+    public static $fileName;
+
     /** 设置表数据
      * @param array $rangeData
      * @param array $data
@@ -100,8 +102,8 @@ class Excel
     private static function saveExcel($PHPExcel, $dirNamePath)
     {
         $writer = \PHPExcel_IOFactory::createWriter($PHPExcel, 'Excel2007');
-        $fileName = uniqid() . ".xlsx";
-        $writer->save($dirNamePath . $fileName);
+        self::$fileName = uniqid() . ".xlsx";
+        $writer->save($dirNamePath . self::$fileName);
     }
 
     /** 生成excel
